@@ -18,6 +18,15 @@ public class step1 {
         }
         direction = scan.next();                //방향 저장
 
+        if(value<0){                            //방향이 음수인경우 양수로 변환후 방향변경
+            value = Math.abs(value);
+            if(direction.equals("R") || direction.equals("r")){
+                direction = "L";
+            }else{
+                direction = "R";
+            }
+        }
+
 
     }
 }
