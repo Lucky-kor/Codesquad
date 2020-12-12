@@ -12,8 +12,8 @@ public class step3 {
                 cube[i][j] = color[i];
             }
         }
-        for(int j=0;j<9;j++){
-            cube[0][j]=Integer.toString(j);
+        for (int j = 0; j < 9; j++) {
+            cube[0][j] = Integer.toString(j);
         }
         printRuwixCubeValue(cube);                          //큐브 초기값 출력
 
@@ -32,13 +32,12 @@ public class step3 {
                 if (!isCorrectCode) {
                     continue;
                 }
-                quit = moveRuwixCube(cube,codes);
+                quit = moveRuwixCube(cube, codes);
                 if (!quit) {
                     printRuwixCubeValue(cube);                          //큐브 출력
                 }
             }
         }
-
     }
 
     private static void printRuwixCubeValue(String[][] cube) {  //큐브 출력 메소드
@@ -86,56 +85,200 @@ public class step3 {
         }
     }
 
-    private static void moveMainRight(String[][] cube, int index){
-        String[] corner = new String[4];
-        String[] edge = new String[4];
-        int[] cornerIndex = {0,2,8,6};
-        int[] edgeIndex = {1,5,7,3};
+    private static void moveMainRight(String[][] cube, int index) {      //돌리는 큐브의 9가지 숫자를 밀어내는 메소드
+        String[] corner = new String[4];        //코너부분 따로 저장하기 위한 함수생성
+        String[] edge = new String[4];          //코너를 제외한 바깥부분 따로 저장하기 위한 함수생성
+        int[] cornerIndex = {0, 2, 8, 6};
+        int[] edgeIndex = {1, 5, 7, 3};
 
-        for(int i=0;i<4;i++){
-            corner[i]=cube[index][cornerIndex[i]];
-            edge[i]=cube[index][edgeIndex[i]];
+        for (int i = 0; i < 4; i++) {
+            corner[i] = cube[index][cornerIndex[i]];  //원본 큐브자료에서 계산할 부분의 큐브 코너부분 값을 복사
+            edge[i] = cube[index][edgeIndex[i]];      //원본 큐브자료에서 계산할 부분의 큐브 코너를 제외한 바깥부분의 값을 복사
         }
         String backupCornerPoint = corner[3];
         String backupEdgePoint = edge[3];
-        for(int j=3;j>0;j--){
-            corner[j]=corner[j-1];
-            System.out.println("conner "+j+" = "+corner[j]);
-            edge[j]=edge[j-1];
+        for (int j = 3; j > 0; j--) {                   //숫자 밀어내기
+            corner[j] = corner[j - 1];
+            edge[j] = edge[j - 1];
         }
-        corner[0]=backupCornerPoint;
-        edge[0]=backupEdgePoint;
-        for(int k=0;k<4;k++){
-            cube[index][cornerIndex[k]]=corner[k];
-            cube[index][edgeIndex[k]]=edge[k];
+        corner[0] = backupCornerPoint;
+        edge[0] = backupEdgePoint;
+        for (int k = 0; k < 4; k++) {                   //밀어낸 값을 원본 큐브자료에 저장하기
+            cube[index][cornerIndex[k]] = corner[k];
+            cube[index][edgeIndex[k]] = edge[k];
         }
     }
-    private static void moveLineRight(String[][] cube,int index){   //닿아있는 4부분의 큐브 숫자를 밀어주는 함수
-        int[][] touchedLine = {{4,3,2,1},{0,2,5,4},{0,3,5,1},{0,4,5,2},{5,3,0,1},{2,3,4,1}};    //닿아있는 큐브의 번호
-        int[][] usedLine = {{7,8,9,8,5,2},{0,3,6,6,7,8},{0,1,2,6,3,0},{2,5,8,0,1,2}};   //닿아있는 큐브의 번호 안의 변경될 숫자의 위치
+
+    private static void moveMainLeft(String[][] cube, int index) {      //돌리는 큐브의 9가지 숫자를 밀어내는 메소드
+        String[] corner = new String[4];        //코너부분 따로 저장하기 위한 함수생성
+        String[] edge = new String[4];          //코너를 제외한 바깥부분 따로 저장하기 위한 함수생성
+        int[] cornerIndex = {0, 2, 8, 6};
+        int[] edgeIndex = {1, 5, 7, 3};
+
+        for (int i = 0; i < 4; i++) {
+            corner[i] = cube[index][cornerIndex[i]];  //원본 큐브자료에서 계산할 부분의 큐브 코너부분 값을 복사
+            edge[i] = cube[index][edgeIndex[i]];      //원본 큐브자료에서 계산할 부분의 큐브 코너를 제외한 바깥부분의 값을 복사
+        }
+        String backupCornerPoint = corner[0];
+        String backupEdgePoint = edge[0];
+        for (int j = 0; j < 3; j++) {                   //숫자 밀어내기
+            corner[j] = corner[j + 1];
+            edge[j] = edge[j + 1];
+        }
+        corner[3] = backupCornerPoint;
+        edge[3] = backupEdgePoint;
+        for (int k = 0; k < 4; k++) {                   //밀어낸 값을 원본 큐브자료에 저장하기
+            cube[index][cornerIndex[k]] = corner[k];
+            cube[index][edgeIndex[k]] = edge[k];
+        }
+    }
+
+    private static void moveLineRight(String[][] cube, int index) {   //닿아있는 4부분의 큐브 숫자를 우측으로 밀어주는 함수
+        int[][] touchedLine = {{4, 3, 2, 1}, {0, 2, 5, 4}, {0, 3, 5, 1}, {0, 4, 5, 2}, {5, 3, 0, 1}, {2, 3, 4, 1}};    //닿아있는 큐브의 번호
+        int[][] usedLine = {{7, 8, 9, 8, 5, 2}, {0, 3, 6, 6, 7, 8}, {0, 1, 2, 6, 3, 0}, {2, 5, 8, 0, 1, 2}};   //닿아있는 큐브의 번호 안의 변경될 숫자의 위치
         String[] backupLineNumber = new String[3];
 
-            backupLineNumber[0]=cube[touchedLine[index][3]][8];     //밀어낸후 옮길 첫자리 숫자 백업
-            backupLineNumber[1]=cube[touchedLine[index][3]][5];
-            backupLineNumber[2]=cube[touchedLine[index][3]][2];
-            for(int i=3;i>0;i--) {
-                for(int j=0;j<3;j++) {
-                    cube[touchedLine[index][i]][usedLine[i][j]] = cube[touchedLine[index][i - 1]][usedLine[i][j+3]];
-                }
+        backupLineNumber[0] = cube[touchedLine[index][3]][8];     //밀어낸후 옮길 첫자리 숫자 백업
+        backupLineNumber[1] = cube[touchedLine[index][3]][5];
+        backupLineNumber[2] = cube[touchedLine[index][3]][2];
+        for (int i = 3; i > 0; i--) {
+            for (int j = 0; j < 3; j++) {
+                cube[touchedLine[index][i]][usedLine[i][j]] = cube[touchedLine[index][i - 1]][usedLine[i][j + 3]];
             }
-            cube[touchedLine[index][0]][6]=backupLineNumber[0];     //백업한 숫자 재입력
-            cube[touchedLine[index][0]][7]=backupLineNumber[1];
-            cube[touchedLine[index][0]][8]=backupLineNumber[2];
+        }
+        cube[touchedLine[index][0]][6] = backupLineNumber[0];     //백업한 숫자 재입력
+        cube[touchedLine[index][0]][7] = backupLineNumber[1];
+        cube[touchedLine[index][0]][8] = backupLineNumber[2];
+    }
+
+    private static void moveLineLeft(String[][] cube, int index) {   //닿아있는 4부분의 큐브 숫자를 좌측으로 밀어주는 함수
+        int[][] touchedLine = {{4, 3, 2, 1}, {0, 2, 5, 4}, {0, 3, 5, 1}, {0, 4, 5, 2}, {5, 3, 0, 1}, {2, 3, 4, 1}};    //닿아있는 큐브의 번호
+        int[][] usedLine = {{6, 7, 8, 0, 3, 6}, {0, 3, 6, 2, 1, 0}, {0, 1, 2, 2, 5, 8}, {2, 5, 8, 8, 7, 6}};   //닿아있는 큐브의 번호 안의 변경될 숫자의 위치
+        String[] backupLineNumber = new String[3];
+
+        backupLineNumber[0] = cube[touchedLine[index][0]][8];     //밀어낸후 옮길 첫자리 숫자 백업
+        backupLineNumber[1] = cube[touchedLine[index][0]][7];
+        backupLineNumber[2] = cube[touchedLine[index][0]][6];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                cube[touchedLine[index][i]][usedLine[i][j]] = cube[touchedLine[index][i + 1]][usedLine[i][j + 3]];
+            }
+        }
+        cube[touchedLine[index][3]][2] = backupLineNumber[0];     //백업한 숫자 재입력
+        cube[touchedLine[index][3]][5] = backupLineNumber[1];
+        cube[touchedLine[index][3]][8] = backupLineNumber[2];
     }
 
     private static boolean moveRuwixCube(String[][] cube, String codes) {
 
-        if(codes.equals(MoveRuwixCube.U.nameCode)){
-            moveMainRight(cube,0);
-            moveLineRight(cube,0);
+        if (codes.equals(MoveRuwixCube.U.nameCode)) {             //상단 시계방향으로 회전
+            moveMainRight(cube, 0);
+            moveLineRight(cube, 0);
             return false;
         }
-        return false;
+        if (codes.equals(MoveRuwixCube.U_MARK.nameCode)) {        //상단 반시계방향으로 회전
+            moveMainLeft(cube, 0);
+            moveLineLeft(cube, 0);
+            return false;
+        }
+        if (codes.equals(MoveRuwixCube.U_TWO.nameCode)) {         //상단 시계방향으로 2분의1만큼 회전
+            moveMainRight(cube, 0);
+            moveLineRight(cube, 0);
+            moveMainRight(cube, 0);
+            moveLineRight(cube, 0);
+            return false;
+        }
+        if (codes.equals(MoveRuwixCube.L.nameCode)) {             //왼쪽 시계방향으로 회전
+            moveMainRight(cube, 1);
+            moveLineRight(cube, 1);
+            return false;
+        }
+        if (codes.equals(MoveRuwixCube.L_MARK.nameCode)) {        //왼쪽 반시계방향으로 회전
+            moveMainLeft(cube, 1);
+            moveLineLeft(cube, 1);
+            return false;
+        }
+        if (codes.equals(MoveRuwixCube.L_TWO.nameCode)) {         //왼쪽 시계방향으로 2분의 1만큼 회전
+            moveMainRight(cube, 1);
+            moveLineRight(cube, 1);
+            moveMainRight(cube, 1);
+            moveLineRight(cube, 1);
+            return false;
+        }
+        if (codes.equals(MoveRuwixCube.F.nameCode)) {             //전면 시계방향으로 회전
+            moveMainRight(cube, 2);
+            moveLineRight(cube, 2);
+            return false;
+        }
+        if (codes.equals(MoveRuwixCube.F_MARK.nameCode)) {        //전면 반시계방향으로 회전
+            moveMainLeft(cube, 2);
+            moveLineLeft(cube, 2);
+            return false;
+        }
+        if (codes.equals(MoveRuwixCube.F_TWO.nameCode)) {         //전면 시계방향으로 2분의 1만큼 회전
+            moveMainRight(cube, 2);
+            moveLineRight(cube, 2);
+            moveMainRight(cube, 2);
+            moveLineRight(cube, 2);
+            return false;
+        }
+        if (codes.equals(MoveRuwixCube.R.nameCode)) {             //우측 시계방향으로 회전
+            moveMainRight(cube, 3);
+            moveLineRight(cube, 3);
+            return false;
+        }
+        if (codes.equals(MoveRuwixCube.R_MARK.nameCode)) {        //우측 반시계방향으로 회전
+            moveMainLeft(cube, 3);
+            moveLineLeft(cube, 3);
+            return false;
+        }
+        if (codes.equals(MoveRuwixCube.R_TWO.nameCode)) {         //우측 시계방향으로 2분의 1만큼 회전
+            moveMainRight(cube, 3);
+            moveLineRight(cube, 3);
+            moveMainRight(cube, 3);
+            moveLineRight(cube, 3);
+            return false;
+        }
+        if (codes.equals(MoveRuwixCube.F.nameCode)) {             //뒷면 시계방향으로 회전
+            moveMainRight(cube, 4);
+            moveLineRight(cube, 4);
+            return false;
+        }
+        if (codes.equals(MoveRuwixCube.F_MARK.nameCode)) {        //뒷면 반시계방향으로 회전
+            moveMainLeft(cube, 4);
+            moveLineLeft(cube, 4);
+            return false;
+        }
+        if (codes.equals(MoveRuwixCube.F_TWO.nameCode)) {         //뒷면 시계방향으로 2분의 1만큼 회전
+            moveMainRight(cube, 4);
+            moveLineRight(cube, 4);
+            moveMainRight(cube, 4);
+            moveLineRight(cube, 4);
+            return false;
+        }
+        if (codes.equals(MoveRuwixCube.D.nameCode)) {             //바닥 시계방향으로 회전
+            moveMainRight(cube, 5);
+            moveLineRight(cube, 5);
+            return false;
+        }
+        if (codes.equals(MoveRuwixCube.D_MARK.nameCode)) {        //바닥 반시계방향으로 회전
+            moveMainLeft(cube, 5);
+            moveLineLeft(cube, 5);
+            return false;
+        }
+        if (codes.equals(MoveRuwixCube.D_TWO.nameCode)) {         //바닥 시계방향으로 2분의 1만큼 회전
+            moveMainRight(cube, 5);
+            moveLineRight(cube, 5);
+            moveMainRight(cube, 5);
+            moveLineRight(cube, 5);
+            return false;
+        }
+        if (codes.equals(MoveRuwixCube.Q.nameCode)) {
+            System.out.println("Bye~");
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private enum MoveRuwixCube {                                    //명령어 정렬
@@ -174,28 +317,4 @@ public class step3 {
             return null;
         }
     }
-//    private enum TouchedLine{
-//        ONE("1",5,4,3,2),
-//        TWO("2",1,3,6,5),
-//        THREE("3",1,4,6,2),
-//        FOUR("4",1,5,6,3),
-//        FIVE("5",6,4,1,2),
-//        SIX("6",3,4,5,2);
-//
-//        public final String lineNameCode;
-//        public final int[] tLine = new int[4];
-//
-//        TouchedLine(String name,int line0, int line1, int line2, int line3){
-//            lineNameCode = name;
-//            tLine[0]=line0;
-//            tLine[1]=line1;
-//            tLine[2]=line2;
-//            tLine[3]=line3;
-//        }
-//        public static String getCode(String name){
-//            for(TouchedLine touchedLine : values()){
-//                if(name.equals(TouchedLine.valueOf()))
-//            }
-//        }
-//    }
 }
