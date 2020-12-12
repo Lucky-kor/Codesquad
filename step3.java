@@ -4,29 +4,47 @@ public class step3 {
     public static void main(String[] args) {
 
         String[][] cube = new String[6][9];
-        String[] color = { "B" , "W" , "O" , "G" , "Y" , "R" };
-        String cheak = null;
-        String code = null;
-        String codes = null;
+        String[] color = {"B", "W", "O", "G", "Y", "R"};
         boolean quit = false;
 
-        for (int i=0; i<6; i++) {                               //큐브 초기값 입력
-            for (int j=0; j<9; j++){
-                cube[i][j]=color[i];
+        for (int i = 0; i < 6; i++) {                               //큐브 초기값 입력
+            for (int j = 0; j < 9; j++) {
+                cube[i][j] = color[i];
             }
         }
+        printRuwixCubeValue(cube);
         //큐브 초기값 출력
+        Scanner scan = new Scanner(System.in);
+        while (!quit) {
+            System.out.println();
+            System.out.print("CUBE > ");
+            String code = scan.nextLine();
+            for (int i = 0; i < code.length(); i++) {       //입력된값을 한글자씩 나누어 구분
+                String codes = getCodes(code, i);
+                if (codes.length() == 2) { // '가 포함된 경우 index+1
+                    i++;
+                }
+                boolean isCorrectCode = printCodes(codes);
+                if (!isCorrectCode) {
+                    continue;
+                }
+            }
+        }
+
+    }
+
+    private static void printRuwixCubeValue(String[][] cube) {
         for (int i = 0; i < 9; i += 3) {                        //첫 큐브는 앞 한칸 띄어 출력함
             System.out.print("       ");
             for (int j = 0; j < 3; j++) {
-                System.out.print(cube[0][j+i] + " ");
+                System.out.print(cube[0][j + i] + " ");
             }
             System.out.println();
         }
         for (int i = 0; i < 9; i += 3) {                        //2~4번째 큐브 출력
             for (int j = 1; j < 5; j++) {
                 for (int k = 0; k < 3; k++) {
-                    System.out.print(cube[j][k+i] + " ");
+                    System.out.print(cube[j][k + i] + " ");
                 }
                 System.out.print(" ");
             }
@@ -35,36 +53,32 @@ public class step3 {
         for (int i = 0; i < 9; i += 3) {                        //마지막 큐브는 앞 한칸 띄어 출력함
             System.out.print("       ");
             for (int j = 0; j < 3; j++) {
-                System.out.print(cube[5][j+i] + " ");
+                System.out.print(cube[5][j + i] + " ");
             }
             System.out.println();
         }
-        Scanner scan = new Scanner(System.in);
-        while(!quit) {
-            System.out.println();
-            System.out.print("CUBE > ");
-            code = scan.nextLine();
-            for (int k = 0; k < code.length(); k++) {       //입력된값을 한글자씩 나누어 구분
-                if (k < code.length() - 1) {
-                    cheak = code.substring(k + 1, k + 2);   //구하는값의 뒷자리의 글자를 cheak에 저장
-                } else {                                    //맨 마지막은 비교할 필요가 없어 체크값 강제입력
-                    cheak = "";
-                }
-                if (cheak.equals("'") || cheak.equals("2")) {                    //cheak의 값이 '일경우 '를 포함해 뒤의값의값까지 함께 저장
-                    codes = code.substring(k, k + 2);
-                    k++;                                    //뒷자리 패싱
-                } else {                                    //이외의 경우 한자리만 저장
-                    codes = code.substring(k, k + 1);
-                }
-                if (codes.equals(MoveCube.getCode(codes))) {//코드값 비교후 코드 출력
-                    System.out.println();
-                    System.out.println(MoveCube.getCode(codes));
-                }
-            }
-        }
-
     }
-    private enum  MoveCube {                                    //명령어 정렬
+
+    private static String getCodes(String code, int index) {
+        boolean isMarkCode = index < code.length() - 1 && (code.charAt(index + 1) == '\'' || code.charAt(index + 1) == '2'); // '여부 체크
+        if (isMarkCode) {
+            return code.substring(index, index + 2);
+        } else {
+            return code.substring(index, index + 1);
+        }
+    }
+
+    private static boolean printCodes(String codes) {
+        if (codes.equals(MoveRuwixCube.getCode(codes))) { // 코드값 비교후 정확한 코드라면 출력
+            System.out.println("\n" + MoveRuwixCube.getCode(codes));
+            return true;
+        } else {
+            System.out.println(codes + "는 잘못된 코드입니다. 정확한 명령어를 입력해 주세요."); // 잘못 입력되었을경우 메시지 출력
+            return false;
+        }
+    }
+
+    private enum MoveRuwixCube {                                    //명령어 정렬
         F("F"),
         F_MARK("F'"),
         F_TWO("F2"),
@@ -87,15 +101,17 @@ public class step3 {
 
         private final String nameCode;
 
-        MoveCube(String name){
+        MoveRuwixCube(String name) {
             nameCode = name;
         }
-        public static String getCode(String name){
-            for(MoveCube moveCube : values()){
-                if(name.equals(moveCube.nameCode)){
-                    return moveCube.nameCode;
+
+        public static String getCode(String name) {
+            for (MoveRuwixCube moveRuwixCube : values()) {
+                if (name.equals(moveRuwixCube.nameCode)) {
+                    return moveRuwixCube.nameCode;
                 }
-            }return null;
+            }
+            return null;
         }
     }
 }
