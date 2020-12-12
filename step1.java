@@ -15,6 +15,7 @@ public class step1 {
         if(-101<value && value<101){
         }else{
             System.out.println("-100과 100까지의 정수값을 입력해 주십시오.");
+//            break;
         }
         direction = scan.next();                //방향 저장
 
@@ -27,6 +28,18 @@ public class step1 {
             }
         }
 
+        while(value>str.length()){ //문자열 자르기 위한 값 구하기
+            value-=str.length();
+        }
 
+        if(direction.equals("R") || direction.equals("r")) {
+            leftWord = str.substring(str.length() - value);
+            rightWord = str.substring(0, str.length() - value);
+        }else{
+            leftWord = str.substring(value);
+            rightWord = str.substring(0, value);
+        }
+
+        System.out.println(leftWord+rightWord);
     }
 }
