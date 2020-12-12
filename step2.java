@@ -16,6 +16,30 @@ public class step2 {
             }
             System.out.println();
         }
+        Scanner scan = new Scanner(System.in);
+        while(!quit) {
+            System.out.println();
+            System.out.print("CUBE > ");
+            code = scan.nextLine();
+
+            for (int k = 0; k < code.length(); k++) {       //입력된값을 한글자씩 나누어 구분
+                if (k < code.length() - 1) {
+                    cheak = code.substring(k + 1, k + 2);   //구하는값의 뒷자리의 글자를 cheak에 저장
+                } else {                                    //맨 마지막은 비교할 필요가 없어 체크값 강제입력
+                    cheak = "";
+                }
+                if (cheak.equals("'")) {                    //cheak의 값이 '일경우 '를 포함해 뒤의값의값까지 함께 저장
+                    codes = code.substring(k, k + 2);
+                    k++;                                    //뒷자리 패싱
+                } else {                                    //이외의 경우 한자리만 저장
+                    codes = code.substring(k, k + 1);
+                }
+                if (codes.equals(MoveCube.getCode(codes))) {
+                    System.out.println();
+                    System.out.println(MoveCube.getCode(codes));
+                }
+            }
+        }
     }
     private enum  MoveCube {
         U("U"),
