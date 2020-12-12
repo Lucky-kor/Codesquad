@@ -10,7 +10,7 @@ public class step2 {
         String cheak;
         String temp = null;
         boolean quit = false;
-        for (int i = 0; i < cube.length; i++) {         //큐브 초기배열 출력
+        for (int i = 0; i < cube.length; i++) {             //큐브 초기배열 출력
             for (int j = 0; j < cube[i].length; j++) {
                 System.out.print(cube[i][j] + " ");
             }
@@ -34,9 +34,120 @@ public class step2 {
                 } else {                                    //이외의 경우 한자리만 저장
                     codes = code.substring(k, k + 1);
                 }
-                if (codes.equals(MoveCube.getCode(codes))) {
+                if (codes.equals(MoveCube.getCode(codes))) {//코드값 비교후 코드 출력
                     System.out.println();
                     System.out.println(MoveCube.getCode(codes));
+                }
+                //코드 분석후 큐브내 이동함
+                if (codes.equals(MoveCube.getCode("U"))) { //U일경우
+                    temp = cube[0][0];
+                    for (int i = 0; i < 2; i++) {
+                        cube[0][i] = cube[0][i + 1];
+                    }
+                    cube[0][2] = temp;
+                    for (int i = 0; i < cube.length; i++) {     //명렁어 실행후 큐브 재출력
+                        for (int j = 0; j < cube[i].length; j++) {
+                            System.out.print(cube[i][j] + " ");
+                        }
+                        System.out.println();
+                    }
+                }
+                else if (codes.equals(MoveCube.getCode("U'"))) { //U'일경우
+                    temp = cube[0][2];
+                    for (int i = 2; i > 0; i--) {
+                        cube[0][i] = cube[0][i - 1];
+                    }
+                    cube[0][0] = temp;
+                    for (int i = 0; i < cube.length; i++) {            //명렁어 실행후 큐브 재출력
+                        for (int j = 0; j < cube[i].length; j++) {
+                            System.out.print(cube[i][j] + " ");
+                        }
+                        System.out.println();
+                    }
+                }
+                else if (codes.equals(MoveCube.getCode("R"))) { //R일경우
+                    temp = cube[0][2];
+                    for (int i = 0; i < 2; i++) {
+                        cube[i][2] = cube[i + 1][2];
+                    }
+                    cube[2][2] = temp;
+                    for (int i = 0; i < cube.length; i++) {           //명렁어 실행후 큐브 재출력
+                        for (int j = 0; j < cube[i].length; j++) {
+                            System.out.print(cube[i][j] + " ");
+                        }
+                        System.out.println();
+                    }
+                }
+                else if (codes.equals(MoveCube.getCode("R'"))) { //R'일경우
+                    temp = cube[2][2];
+                    for (int i = 2; i > 0; i--) {
+                        cube[i][2] = cube[i - 1][2];
+                    }
+                    cube[0][2] = temp;
+                    for (int i = 0; i < cube.length; i++) {           //명렁어 실행후 큐브 재출력
+                        for (int j = 0; j < cube[i].length; j++) {
+                            System.out.print(cube[i][j] + " ");
+                        }
+                        System.out.println();
+                    }
+                }
+                else if (codes.equals(MoveCube.getCode("L"))) { //L일경우
+                    temp = cube[2][0];
+                    for (int i = 2; i > 0; i--) {
+                        cube[i][0] = cube[i - 1][0];
+                    }
+                    cube[0][0] = temp;
+                    for (int i = 0; i < cube.length; i++) {          //명렁어 실행후 큐브 재출력
+                        for (int j = 0; j < cube[i].length; j++) {
+                            System.out.print(cube[i][j] + " ");
+                        }
+                        System.out.println();
+                    }
+                }
+                else if (codes.equals(MoveCube.getCode("L'"))) { //L'일경우
+                    temp = cube[0][0];
+                    for (int i = 0; i < 2; i++) {
+                        cube[i][0] = cube[i + 1][0];
+                    }
+                    cube[2][0] = temp;
+                    for (int i = 0; i < cube.length; i++) {           //명렁어 실행후 큐브 재출력
+                        for (int j = 0; j < cube[i].length; j++) {
+                            System.out.print(cube[i][j] + " ");
+                        }
+                        System.out.println();
+                    }
+                }
+                else if (codes.equals(MoveCube.getCode("B"))) { //B일경우
+                    temp = cube[2][2];
+                    for (int i = 2; i > 0; i--) {
+                        cube[2][i] = cube[2][i - 1];
+                    }
+                    cube[2][0] = temp;
+                    for (int i = 0; i < cube.length; i++) {           //명렁어 실행후 큐브 재출력
+                        for (int j = 0; j < cube[i].length; j++) {
+                            System.out.print(cube[i][j] + " ");
+                        }
+                        System.out.println();
+                    }
+                }
+                else if (codes.equals(MoveCube.getCode("B'"))) { //B'일경우
+                    temp = cube[2][0];
+                    for (int i = 0; i < 2; i++) {
+                        cube[2][i] = cube[2][i + 1];
+                    }
+                    cube[2][2] = temp;
+                    for (int i = 0; i < cube.length; i++) {            //명렁어 실행후 큐브 재출력
+                        for (int j = 0; j < cube[i].length; j++) {
+                            System.out.print(cube[i][j] + " ");
+                        }
+                        System.out.println();
+                    }
+                }
+                else if (codes.equals(MoveCube.getCode("Q"))) {//Q가 입력될경우 메시지 출력후 종
+                    System.out.println("Bye~");
+                    quit = true;
+                }else {
+                    System.out.println("정확한 명령어를 입력해 주세요.");    //잘못 입력되었을경우 메시지 출력
                 }
             }
         }
