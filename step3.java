@@ -38,4 +38,38 @@ public class step3 {
         Scanner scan = new Scanner(System.in);
 
     }
+    private enum  MoveCube {                                    //명령어 정렬
+        F("F"),
+        F_MARK("F'"),
+        F_TWO("F2"),
+        R("R"),
+        R_MARK("R'"),
+        R_TWO("R2"),
+        U("U"),
+        U_MARK("U'"),
+        U_TWO("U2"),
+        B("B"),
+        B_MARK("B'"),
+        B_TWO("B2"),
+        L("L"),
+        L_MARK("L'"),
+        L_TWO("L2"),
+        D("D"),
+        D_MARK("D'"),
+        D_TWO("D2"),
+        Q("Q");
+
+        private final String nameCode;
+
+        MoveCube(String name){
+            nameCode = name;
+        }
+        public static String getCode(String name){
+            for(MoveCube moveCube : values()){
+                if(name.equals(moveCube.nameCode)){
+                    return moveCube.nameCode;
+                }
+            }return null;
+        }
+    }
 }
