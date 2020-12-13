@@ -48,6 +48,8 @@ private static boolean printCodes(String codes) {
     }
 ```
   
+### 2.Processing ###  
+
  * When dividing the following command, it checks for "'".  
   
 ```java
@@ -61,4 +63,15 @@ private static String getCodes(String code, int index) {
     }
 ```
   
- * After arranging the commands into enumeration constants, the moveCube method was created to process the divided commands.  
+ * After arranging the commands into enumeration constants, the moveCube method was created to process the divided commands. 
+ * We have created a separate output method for conciseness every time cube output after command input.
+```java
+private static void printCubeValue(String[][] cube) {
+        for (int i = 0; i < cube.length; i++) {
+            for (int j = 0; j < cube[i].length; j++) {
+                System.out.print(cube[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+``` 
