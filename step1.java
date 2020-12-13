@@ -62,7 +62,7 @@ public class step1 {
         }
 
         public static Direction getWord(String simpleDirection) {
-            for (Direction word: values()) {
+            for (Direction word : values()) {
                 if (word.simpleDirection.equals(simpleDirection.toUpperCase())) {
                     return word;
                 }
