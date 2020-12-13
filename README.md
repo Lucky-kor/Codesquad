@@ -30,7 +30,7 @@ Words that are pushed out are filled to the opposite side.
   
 ## Code detail ##  
   
-### 1. Command input part ###. 
+### 1. Command input part ###  
   
  * It was coding by extracting the input command as a separate method. 
  * If the input does not match the input form, an error message is output and the input is waited for again.   
