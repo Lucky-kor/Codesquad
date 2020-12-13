@@ -317,7 +317,8 @@ public class step3 {
         }
         if (codes.equals(MoveRuwixCube.Q.nameCode)) {
             long end = System.currentTimeMillis();
-            System.out.println("실행 시간 : " + (end - start) / 1000.0 + "초");
+            int time = (int) (end - start) / 1000;
+            System.out.println("실행 시간 : " + time + "초");
             System.out.println("조작갯수 : " + checkCount);
             System.out.println("이용해주셔서 감사합니다. 뚜뚜뚜.");
             return true;
