@@ -9,18 +9,17 @@ When Q is input, the program is terminated and the number of commands operated i
 [link]: https://cube3x3.com/큐브를-맞추는-방/#notation
   
 ### Initial state of the cube ###  
-                B B B  
-                B B B
-                B B B
-
- W W W     O O O     G G G     Y Y Y 
- W W W     O O O     G G G     Y Y Y 
- W W W     O O O     G G G     Y Y Y 
- 
-                R R R 
-                R R R 
-                R R R 
-
+  
+		B B B  
+		B B B  
+		B B B  
+	W W W	O O O	G G G	Y Y Y  
+	W W W	O O O	G G G	Y Y Y  
+	W W W	O O O	G G G	Y Y Y  
+		R R R  
+		R R R  
+		R R R  
+  
 ### Program execution example ###  
   
 (초기 상태 출력)  
