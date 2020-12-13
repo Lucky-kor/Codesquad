@@ -1,4 +1,4 @@
-###String pushing  
+### String pushing  
   
 It receives a string, number, and direction to push.  
 One word, one integer number (-100 <= N <100), L or R from the user. L or R can be entered in both upper and lower case letters.  
