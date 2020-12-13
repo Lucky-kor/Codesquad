@@ -13,11 +13,9 @@ When Q is input, the program is terminated and the number of commands operated i
                 B B B  
                 B B B  
                 B B B  
-  
- W W W     O O O     G G G     Y Y Y   
- W W W     O O O     G G G     Y Y Y   
- W W W     O O O     G G G     Y Y Y   
-   
+ W W W     O O O     G G G     Y Y Y  
+ W W W     O O O     G G G     Y Y Y  
+ W W W     O O O     G G G     Y Y Y  
                 R R R   
                 R R R   
                 R R R   
