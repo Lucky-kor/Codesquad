@@ -171,7 +171,7 @@ public class step3 {
         cube[touchedLine[index][3]][8] = backupLineNumber[2];
     }
 
-    private static boolean checkSuccessEnd(String[][] cube, String[][] checkCube,long start, int checkCount) { //큐브 모든면이 일치하면 성공메시지 출력후 종
+    private static boolean checkSuccessEnd(String[][] cube, String[][] checkCube, long start, int checkCount) { //큐브 모든면이 일치하면 성공메시지 출력후 종
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 9; j++) {
                 if (!cube[i][j].equals(checkCube[i][j])) {
@@ -188,109 +188,132 @@ public class step3 {
         System.out.println("큐브의 모든 면 맞았습니다. 축하합니다. 짝짝");
         return true;
     }
+
+    private static void shuffle(String[][] cube) {
+        int[] cubeIndex = {0, 1, 2, 3, 4, 5, 0, 2, 4, 5};
+        int cost = (int) (Math.random() * 100);
+        for (int k = 0; k < cost; k++) {
+            int j = (int) (Math.random() * 10);
+            double i = Math.random();
+            if (i > 0 && i < 0.25) {
+                moveLineRight(cube, cubeIndex[j]);
+            } else if (i > 0.25 && i < 0.5) {
+                moveLineLeft(cube, cubeIndex[j]);
+            } else if (i > 0.5 && i < 0.75) {
+                moveMainRight(cube, cubeIndex[j]);
+            } else {
+                moveMainLeft(cube, cubeIndex[j]);
+            }
+        }
+    }
+
     private static boolean moveRuwixCube(String[][] cube, String[][] checkCube, String codes, int checkCount, long start) {
 
         if (codes.equals(MoveRuwixCube.U.nameCode)) {             //상단 시계방향으로 회전
             moveMainRight(cube, 0);
             moveLineRight(cube, 0);
-            return checkSuccessEnd(cube, checkCube,start,checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
         }
         if (codes.equals(MoveRuwixCube.U_MARK.nameCode)) {        //상단 반시계방향으로 회전
             moveMainLeft(cube, 0);
             moveLineLeft(cube, 0);
-            return checkSuccessEnd(cube, checkCube,start,checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
         }
         if (codes.equals(MoveRuwixCube.U_TWO.nameCode)) {         //상단 시계방향으로 2분의1만큼 회전
             moveMainRight(cube, 0);
             moveLineRight(cube, 0);
             moveMainRight(cube, 0);
             moveLineRight(cube, 0);
-            return checkSuccessEnd(cube, checkCube,start,checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
         }
         if (codes.equals(MoveRuwixCube.L.nameCode)) {             //왼쪽 시계방향으로 회전
             moveMainRight(cube, 1);
             moveLineRight(cube, 1);
-            return checkSuccessEnd(cube, checkCube, start, checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
         }
         if (codes.equals(MoveRuwixCube.L_MARK.nameCode)) {        //왼쪽 반시계방향으로 회전
             moveMainLeft(cube, 1);
             moveLineLeft(cube, 1);
-            return checkSuccessEnd(cube, checkCube,start,checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
         }
         if (codes.equals(MoveRuwixCube.L_TWO.nameCode)) {         //왼쪽 시계방향으로 2분의 1만큼 회전
             moveMainRight(cube, 1);
             moveLineRight(cube, 1);
             moveMainRight(cube, 1);
             moveLineRight(cube, 1);
-            return checkSuccessEnd(cube, checkCube,start,checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
         }
         if (codes.equals(MoveRuwixCube.F.nameCode)) {             //전면 시계방향으로 회전
             moveMainRight(cube, 2);
             moveLineRight(cube, 2);
-            return checkSuccessEnd(cube, checkCube,start,checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
         }
         if (codes.equals(MoveRuwixCube.F_MARK.nameCode)) {        //전면 반시계방향으로 회전
             moveMainLeft(cube, 2);
             moveLineLeft(cube, 2);
-            return checkSuccessEnd(cube, checkCube,start,checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
         }
         if (codes.equals(MoveRuwixCube.F_TWO.nameCode)) {         //전면 시계방향으로 2분의 1만큼 회전
             moveMainRight(cube, 2);
             moveLineRight(cube, 2);
             moveMainRight(cube, 2);
             moveLineRight(cube, 2);
-            return checkSuccessEnd(cube, checkCube,start,checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
         }
         if (codes.equals(MoveRuwixCube.R.nameCode)) {             //우측 시계방향으로 회전
             moveMainRight(cube, 3);
             moveLineRight(cube, 3);
-            return checkSuccessEnd(cube, checkCube,start,checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
         }
         if (codes.equals(MoveRuwixCube.R_MARK.nameCode)) {        //우측 반시계방향으로 회전
             moveMainLeft(cube, 3);
             moveLineLeft(cube, 3);
-            return checkSuccessEnd(cube, checkCube,start,checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
         }
         if (codes.equals(MoveRuwixCube.R_TWO.nameCode)) {         //우측 시계방향으로 2분의 1만큼 회전
             moveMainRight(cube, 3);
             moveLineRight(cube, 3);
             moveMainRight(cube, 3);
             moveLineRight(cube, 3);
-            return checkSuccessEnd(cube, checkCube,start,checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
         }
         if (codes.equals(MoveRuwixCube.F.nameCode)) {             //뒷면 시계방향으로 회전
             moveMainRight(cube, 4);
             moveLineRight(cube, 4);
-            return checkSuccessEnd(cube, checkCube,start,checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
         }
         if (codes.equals(MoveRuwixCube.F_MARK.nameCode)) {        //뒷면 반시계방향으로 회전
             moveMainLeft(cube, 4);
             moveLineLeft(cube, 4);
-            return checkSuccessEnd(cube, checkCube,start,checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
         }
         if (codes.equals(MoveRuwixCube.F_TWO.nameCode)) {         //뒷면 시계방향으로 2분의 1만큼 회전
             moveMainRight(cube, 4);
             moveLineRight(cube, 4);
             moveMainRight(cube, 4);
             moveLineRight(cube, 4);
-            return checkSuccessEnd(cube, checkCube,start,checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
         }
         if (codes.equals(MoveRuwixCube.D.nameCode)) {             //바닥 시계방향으로 회전
             moveMainRight(cube, 5);
             moveLineRight(cube, 5);
-            return checkSuccessEnd(cube, checkCube,start,checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
         }
         if (codes.equals(MoveRuwixCube.D_MARK.nameCode)) {        //바닥 반시계방향으로 회전
             moveMainLeft(cube, 5);
             moveLineLeft(cube, 5);
-            return checkSuccessEnd(cube, checkCube,start,checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
         }
         if (codes.equals(MoveRuwixCube.D_TWO.nameCode)) {         //바닥 시계방향으로 2분의 1만큼 회전
             moveMainRight(cube, 5);
             moveLineRight(cube, 5);
             moveMainRight(cube, 5);
             moveLineRight(cube, 5);
-            return checkSuccessEnd(cube, checkCube,start,checkCount+1);
+            return checkSuccessEnd(cube, checkCube, start, checkCount + 1);
+        }
+        if (codes.equals(MoveRuwixCube.SHUFFLE.nameCode)) {
+            System.out.println("무작위로 큐브를 섞습니다.");
+            shuffle(cube);
         }
         if (codes.equals(MoveRuwixCube.Q.nameCode)) {
             long end = System.currentTimeMillis();
@@ -322,7 +345,7 @@ public class step3 {
         D("D"),
         D_MARK("D'"),
         D_TWO("D2"),
-        RANDOM("R"),
+        SHUFFLE("S"),
         Q("Q");
 
         private final String nameCode;
