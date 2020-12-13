@@ -5,15 +5,13 @@ public class step3 {
 
         String[][] cube = new String[6][9];
         String[] color = {"B", "W", "O", "G", "Y", "R"};
+        int checkCount = 0;
         boolean quit = false;
-
+        long start = System.currentTimeMillis();
         for (int i = 0; i < 6; i++) {                               //큐브 초기값 입력
             for (int j = 0; j < 9; j++) {
                 cube[i][j] = color[i];
             }
-        }
-        for (int j = 0; j < 9; j++) {
-            cube[0][j] = Integer.toString(j);
         }
         printRuwixCubeValue(cube);                          //큐브 초기값 출력
 
@@ -28,11 +26,12 @@ public class step3 {
                 if (codes.length() == 2) { // '가 포함된 경우 index+1
                     i++;
                 }
-                boolean isCorrectCode = printCodes(codes);
+                boolean isCorrectCode = printCodes(codes);checkCount++;
                 if (!isCorrectCode) {
+                    checkCount--;
                     continue;
                 }
-                quit = moveRuwixCube(cube, codes);
+                quit = moveRuwixCube(cube, codes,checkCount-1,start);
                 if (!quit) {
                     printRuwixCubeValue(cube);                          //큐브 출력
                 }
@@ -169,7 +168,7 @@ public class step3 {
         cube[touchedLine[index][3]][8] = backupLineNumber[2];
     }
 
-    private static boolean moveRuwixCube(String[][] cube, String codes) {
+    private static boolean moveRuwixCube(String[][] cube, String codes, int checkCount, long start) {
 
         if (codes.equals(MoveRuwixCube.U.nameCode)) {             //상단 시계방향으로 회전
             moveMainRight(cube, 0);
@@ -274,7 +273,10 @@ public class step3 {
             return false;
         }
         if (codes.equals(MoveRuwixCube.Q.nameCode)) {
-            System.out.println("Bye~");
+            long end = System.currentTimeMillis();
+            System.out.println("실행 시간 : " + (end - start)/1000.0 + "초");
+            System.out.println("조작갯수 : "+checkCount);
+            System.out.println("이용해주셔서 감사합니다. 뚜뚜뚜.");
             return true;
         } else {
             return false;
